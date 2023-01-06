@@ -20,7 +20,12 @@ server.post("/sign-up", (req, res) => {
 });
 
 server.get("/tweets", (req, res) => {
-  res.send(tweets);
+  if (tweets.length < 10) {
+    res.send(tweets);
+  } else {
+    const newArr = tweets.slice(-10);
+    res.send(newArr);
+  }
 });
 
 server.post("/tweets", (req, res) => {
