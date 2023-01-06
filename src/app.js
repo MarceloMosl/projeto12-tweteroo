@@ -9,14 +9,7 @@ server.listen(5000, () => console.log("Ola"));
 
 const users = [];
 
-const tweets = [
-  {
-    username: "bobesponja",
-    tweet: "eu amo o hub",
-    avatar:
-      "https://super.abril.com.br/wp-content/uploads/2020/09/04-09_gato_SITE.jpg?quality=70&strip=info",
-  },
-];
+const tweets = [];
 
 server.post("/sign-up", (req, res) => {
   const user = req.body;
@@ -28,4 +21,17 @@ server.post("/sign-up", (req, res) => {
 
 server.get("/tweets", (req, res) => {
   res.send(tweets);
+});
+
+server.post("/tweets", (req, res) => {
+  const tweet = req.body;
+  const validador = users.find((a) => a.username == tweet.username);
+
+  if (validador) {
+    tweet.avatar = validador.avatar;
+    tweets.push(tweet);
+    res.send({ resposnse: "OK" });
+  } else {
+    res.send("UNAUTHORIZED");
+  }
 });
